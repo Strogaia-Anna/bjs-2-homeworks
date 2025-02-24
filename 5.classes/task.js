@@ -107,29 +107,32 @@ class Library {
 class Student {
     constructor(name){
         this.name = name;
-        this.diary = {};
+        this.marks = {};
     }
 
     addMark(mark, subject) {
         if (2 <= mark && mark <= 5) {
-            if (!(subject in this.diary)) {
-                this.diary[subject] = [];
+            if (!(subject in this.marks)) {
+                this.marks[subject] = [];
             }
-            this.diary[subject].push(mark);
+            this.marks[subject].push(mark);
         }
     }
 
     getAverageBySubject(subject) {
         let result = 0;
-        if (subject in this.diary) {
-            result = this.diary[subject].reduce((sum, current) => sum + current, 0) / this.diary[subject].length;
+        if (subject in this.marks) {
+            result = this.marks[subject].reduce((sum, current) => sum + current, 0) / this.marks[subject].length;
         }
         return result;
     }
 
     getAverage() {
         let sum = 0;
-        let keys = Object.keys(this.diary);
+        let keys = Object.keys(this.marks);
+        if (keys.length === 0) {
+            return sum;
+        }
         for (let key of keys) {
             sum += this.getAverageBySubject(key);
           }
